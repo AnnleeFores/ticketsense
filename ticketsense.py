@@ -2,17 +2,18 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 import re
+from time import sleep
 
-#Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma
+#Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to add date to the end
 
 links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT/20211216',
 'https://in.bookmyshow.com/buytickets/aura-cinema-mattannur/cinema-matt-ACMR-MT/20211216',
 'https://www.ticketnew.com/Carnival-Downtown--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/12539/20211216',
 'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203/20211216',
 'https://www.ticketnew.com/Mallika-Plex-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10264/20211216',
-'https://in.bookmyshow.com/buytickets/carnival-arti-suncity-mall-barasat/cinema-kolk-ACBK-MT/20211216'
+'https://in.bookmyshow.com/buytickets/carnival-arti-suncity-mall-barasat/cinema-kolk-ACBK-MT/20211216',
+'https://in.bookmyshow.com/buytickets/pvr-lulu-kochi/cinema-koch-PVKC-MT/20211216'
 ]
 
 
@@ -108,7 +109,12 @@ lenvalue = len(regexelem)
 bms_links = links[:lenvalue]
 tnew_links = links[lenvalue:]
 
-loopy(bms_links)
-loopy(tnew_links)
+while True:
+    loopy(bms_links)
+    loopy(tnew_links)
+    sleep(30)
 
-browser.quit()
+
+
+
+#browser.quit()
