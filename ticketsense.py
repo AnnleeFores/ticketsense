@@ -1,3 +1,5 @@
+#ticketsense.py
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -5,26 +7,31 @@ from selenium.webdriver.support import expected_conditions as EC
 import re
 from time import sleep
 
-#Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to add date to the end
+#Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to remove date from the end
 
-links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT/20211216',
-'https://in.bookmyshow.com/buytickets/aura-cinema-mattannur/cinema-matt-ACMR-MT/20211216',
-'https://www.ticketnew.com/Carnival-Downtown--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/12539/20211216',
-'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203/20211216',
-'https://www.ticketnew.com/Mallika-Plex-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10264/20211216',
-'https://in.bookmyshow.com/buytickets/carnival-arti-suncity-mall-barasat/cinema-kolk-ACBK-MT/20211216',
-'https://in.bookmyshow.com/buytickets/pvr-lulu-kochi/cinema-koch-PVKC-MT/20211216'
+links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT',
+'https://in.bookmyshow.com/buytickets/aura-cinema-mattannur/cinema-matt-ACMR-MT',
+'https://www.ticketnew.com/Carnival-Downtown--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/12539',
+'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203',
+'https://www.ticketnew.com/Mallika-Plex-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10264',
+'https://in.bookmyshow.com/buytickets/carnival-arti-suncity-mall-barasat/cinema-kolk-ACBK-MT',
+'https://in.bookmyshow.com/buytickets/pvr-lulu-kochi/cinema-koch-PVKC-MT'
 ]
 
 
 browser = webdriver.Firefox() #opens web browser -> firefox
 
-main_DATE = '16' # DATE of booking
+# DATE of booking
+main_DATE = '16' 
+Mon = '12'
+Year = '2021'
+
+filmname = 'spider' #first word of film name
 
 
 def senseticket_bms(arg):
     
-    browser.get(arg)
+    browser.get(arg + f'/{Year}{Mon}{main_DATE}')
     try:
         date = WebDriverWait(browser, 10).until(
         EC.presence_of_element_located((By.ID, 'showDates')))
@@ -40,18 +47,19 @@ def senseticket_bms(arg):
             print(f'Bookmyshow: {venue.text} {main_DATE}th Dec slot opened!!!')
             for show in showsB:
                 print(f'Ticket booking started for {show.text}')
+                if filmname in show.text.lower():
+                    print('Found Spidey')
             print('-'.center(80, '-'))
         else:
             print(f'Bookmyshow: {venue.text} not yet open')
             print('-'.center(80, '-'))
-        return showsB
     except:
         print('Was not able to find an element with that name.')
         print('-'.center(80, '-'))
 
 
 def senseticket_tnew(arg):
-    browser.get(arg)
+    browser.get(arg + f'/202112{main_DATE}')
     try:
         venue = WebDriverWait(browser, 10).until(
         EC.presence_of_element_located((By.XPATH, '//*[@id="divTheatreInfo"]/h2')))
@@ -67,14 +75,17 @@ def senseticket_tnew(arg):
             print(f'Ticket New: {venue.text} {main_DATE}th Dec slot opened!!!')
             for show in showsT[1:]:
                 print(f'Ticket booking started for {show.text}')
+                if filmname in show.text.lower():
+                    print('Found Spidey')
             print('-'.center(80, '-'))
         else:
             print(f'Ticket New: {venue.text} not yet open')
             print('-'.center(80, '-'))
-        return showsT
+
     except:
         print(f'Ticket New:{venue.text} Was not able to find an element with that name.')
         print('-'.center(80, '-'))
+
 
 def listToString(s):
     str1 = "" 
@@ -114,7 +125,8 @@ while True:
     loopy(tnew_links)
     sleep(30)
 
+""" loopy(bms_links)
+loopy(tnew_links) """
 
 
-
-#browser.quit()
+browser.quit()
