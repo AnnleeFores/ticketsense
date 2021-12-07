@@ -17,7 +17,7 @@ links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cine
 'https://in.bookmyshow.com/buytickets/carnival-arti-suncity-mall-barasat/cinema-kolk-ACBK-MT',
 'https://in.bookmyshow.com/buytickets/pvr-lulu-kochi/cinema-koch-PVKC-MT',
 'https://www.ticketnew.com/Apsara-Theatre-4K--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10515',
-'https://www.ticketnew.com/Crown-Theatre-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/213'
+#https://www.ticketnew.com/Crown-Theatre-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/213'
 ]
 
 
@@ -44,13 +44,17 @@ def senseticket_bms(arg):
         showsB = WebDriverWait(browser, 10).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a.nameSpan')))
 
-        p = (date.text[0:2])
+        po = re.compile(r"\d\d")
+        pp = po.search(date.text)
+        p = pp.group()
+        
         if p == main_DATE:
             print(f'Bookmyshow: {venue.text} {main_DATE}th Dec slot opened!!!')
-            for show in showsB:
-                print(f'Ticket booking started for {show.text}')
+            for count, show in enumerate(showsB, start=1):
+                print(count, f'- Ticket booking started for {show.text}')
                 if filmname in show.text.lower():
-                    print('Found Spidey')
+                    print(f'Found Spidey - {arg}/{Year}{Mon}{main_DATE}')
+                    
             print('-'.center(80, '-'))
         else:
             print(f'Bookmyshow: {venue.text} not yet open')
@@ -72,13 +76,18 @@ def senseticket_tnew(arg):
         date = WebDriverWait(browser, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, 'li.ui-tabs-tab.ui-corner-top.ui-state-default.ui-tab.ui-tabs-active.ui-state-active')))
 
-        q = (date.text[4:])
+        # q = (date.text[4:])
+
+        qo = re.compile(r"\d\d")
+        qp = qo.search(date.text)
+        q = qp.group()
+
         if q == main_DATE:
             print(f'Ticket New: {venue.text} {main_DATE}th Dec slot opened!!!')
-            for show in showsT[1:]:
-                print(f'Ticket booking started for {show.text}')
+            for count, show in enumerate(showsT[1:], start=1):
+                print(count,f'- Ticket booking started for {show.text}')
                 if filmname in show.text.lower():
-                    print('Found Spidey')
+                    print(f'Found Spidey - {arg}/{Year}{Mon}{main_DATE}')
             print('-'.center(80, '-'))
         else:
             print(f'Ticket New: {venue.text} not yet open')
@@ -122,13 +131,13 @@ lenvalue = len(regexelem)
 bms_links = links[:lenvalue]
 tnew_links = links[lenvalue:]
 
-while True:
+""" while True:
     loopy(bms_links)
     loopy(tnew_links)
-    sleep(60)
+    sleep(60) """
 
-""" loopy(bms_links)
-loopy(tnew_links) """
+loopy(bms_links)
+loopy(tnew_links)
 
 
-#browser.quit()
+browser.quit()
