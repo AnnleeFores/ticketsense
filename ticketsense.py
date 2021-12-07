@@ -6,14 +6,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import re
 from time import sleep
+from twilio.rest import Client
 
 #Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to remove date from the end
 
 links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT',
 'https://in.bookmyshow.com/buytickets/aura-cinema-mattannur/cinema-matt-ACMR-MT',
 'https://www.ticketnew.com/Carnival-Downtown--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/12539',
-'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203',
-'https://www.ticketnew.com/Mallika-Plex-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10264',
+#https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203',
+#https://www.ticketnew.com/Mallika-Plex-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10264',
 'https://in.bookmyshow.com/buytickets/carnival-arti-suncity-mall-barasat/cinema-kolk-ACBK-MT',
 'https://in.bookmyshow.com/buytickets/pvr-lulu-kochi/cinema-koch-PVKC-MT',
 'https://www.ticketnew.com/Apsara-Theatre-4K--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10515',
@@ -30,6 +31,14 @@ Year = '2021'
 
 filmname = 'spider' #first word of film name
 
+client = Client()
+from_whatsapp_number='whatsapp:+14155238886'
+to_whatsapp_number='whatsapp:+918129250447'
+
+def message(msg):
+    client.messages.create(body=msg,
+                       from_=from_whatsapp_number,
+                       to=to_whatsapp_number)
 
 def senseticket_bms(arg):
     
@@ -54,6 +63,7 @@ def senseticket_bms(arg):
                 print(count, f'- Ticket booking started for {show.text}')
                 if filmname in show.text.lower():
                     print(f'Found Spidey - {arg}/{Year}{Mon}{main_DATE}')
+                    message(f'Found Spidey - {arg}/{Year}{Mon}{main_DATE}')
                     
             print('-'.center(80, '-'))
         else:
@@ -88,6 +98,7 @@ def senseticket_tnew(arg):
                 print(count,f'- Ticket booking started for {show.text}')
                 if filmname in show.text.lower():
                     print(f'Found Spidey - {arg}/{Year}{Mon}{main_DATE}')
+                    message(f'Found Spidey - {arg}/{Year}{Mon}{main_DATE}')
             print('-'.center(80, '-'))
         else:
             print(f'Ticket New: {venue.text} not yet open')
