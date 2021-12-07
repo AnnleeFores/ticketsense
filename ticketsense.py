@@ -15,7 +15,9 @@ links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cine
 'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203',
 'https://www.ticketnew.com/Mallika-Plex-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10264',
 'https://in.bookmyshow.com/buytickets/carnival-arti-suncity-mall-barasat/cinema-kolk-ACBK-MT',
-'https://in.bookmyshow.com/buytickets/pvr-lulu-kochi/cinema-koch-PVKC-MT'
+'https://in.bookmyshow.com/buytickets/pvr-lulu-kochi/cinema-koch-PVKC-MT',
+'https://www.ticketnew.com/Apsara-Theatre-4K--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10515',
+'https://www.ticketnew.com/Crown-Theatre-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/213'
 ]
 
 
@@ -123,10 +125,10 @@ tnew_links = links[lenvalue:]
 while True:
     loopy(bms_links)
     loopy(tnew_links)
-    sleep(30)
+    sleep(60)
 
 """ loopy(bms_links)
 loopy(tnew_links) """
 
 
-browser.quit()
+#browser.quit()
