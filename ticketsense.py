@@ -8,6 +8,7 @@ import re
 import os
 import telebot
 from dotenv import load_dotenv
+from time import sleep
 
 
 
@@ -81,7 +82,7 @@ def senseticket_bms(arg):
 
 
 def senseticket_tnew(arg):
-    browser.get(arg + f'/202112{DATE}')
+    browser.get(arg + f'/{YEAR}{MON}{DATE}')
     try:
         venue = WebDriverWait(browser, 10).until(
         EC.presence_of_element_located((By.XPATH, '//*[@id="divTheatreInfo"]/h2')))
@@ -148,13 +149,13 @@ lenvalue = len(regexelem)
 bms_links = links[:lenvalue]
 tnew_links = links[lenvalue:]
 
-""" while True:
+while True:
     loopy(bms_links)
     loopy(tnew_links)
-    sleep(60) """
+    sleep(60)
 
-loopy(bms_links)
-loopy(tnew_links)
+""" loopy(bms_links)
+loopy(tnew_links) """
 
 
-browser.quit()
+#browser.quit()
