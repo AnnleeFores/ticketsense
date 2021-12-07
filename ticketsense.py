@@ -2,6 +2,7 @@ from selenium import webdriver
 import time
 import re
 
+#Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma
 
 links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT/20211216',
 'https://in.bookmyshow.com/buytickets/aura-cinema-mattannur/cinema-matt-ACMR-MT/20211216',
@@ -11,10 +12,11 @@ links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cine
 ]
 
 
-browser = webdriver.Firefox()
+browser = webdriver.Firefox() #opens web browser -> firefox
 
 
 def senseticket_bms(arg):
+    
     browser.get(arg)
     try:
         elem = browser.find_element_by_id('showDates')
