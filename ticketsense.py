@@ -1,18 +1,15 @@
 from selenium import webdriver
 import time
-
-links = []
-
-#BMS
-link1 = 'https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT/20211216'
-link2 = 'https://in.bookmyshow.com/buytickets/aura-cinema-mattannur/cinema-matt-ACMR-MT/20211216'
-
-#TNEW
-link3 = 'https://www.ticketnew.com/Carnival-Downtown--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/12539/20211216'
-link4 = 'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203/20211216'
+import re
 
 
-links += [link1,link2,link3,link4]
+links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT/20211216',
+'https://in.bookmyshow.com/buytickets/aura-cinema-mattannur/cinema-matt-ACMR-MT/20211216',
+'https://www.ticketnew.com/Carnival-Downtown--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/12539/20211216',
+'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203/20211216',
+'https://www.ticketnew.com/Mallika-Plex-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10264/20211216'
+]
+
 
 browser = webdriver.Firefox()
 
@@ -34,8 +31,8 @@ def senseticket_bms(arg):
 def senseticket_tnew(arg):
     browser.get(arg)
     try:
-        elem = browser.find_element_by_id('ulShowDate')
-        q = (elem.text[6:])
+        elem = browser.find_element_by_css_selector('li.ui-tabs-tab.ui-corner-top.ui-state-default.ui-tab.ui-tabs-active.ui-state-active')
+        q = (elem.text[4:])
         print(f'{q} Dec')
         if q == '16':
             print('Ticket New: Spidey day slot opened!!!')
@@ -45,11 +42,26 @@ def senseticket_tnew(arg):
     except:
         print('Was not able to find an element with that name.')
 
+def listToString(s):
+    str1 = "" 
+    for ele in s: 
+        str1 += ele  
+    return str1
+    
 
-#while True:
+links.sort()
 
-bms_links = links[:2]
-tnew_links = links[2:4]
+
+liststr = listToString(links) 
+
+
+mo = re.compile(r"bookmyshow")
+regexelem = mo.findall(liststr)
+lenvalue = len(regexelem)
+
+bms_links = links[:lenvalue]
+tnew_links = links[lenvalue:]
+
 
 for i in bms_links:
     senseticket_bms(i)
