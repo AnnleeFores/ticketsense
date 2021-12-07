@@ -14,21 +14,30 @@ links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cine
 
 browser = webdriver.Firefox() #opens web browser -> firefox
 
+DATE = '16'
+
 
 def senseticket_bms(arg):
     
     browser.get(arg)
     try:
-        elem = browser.find_element_by_id('showDates')
-        p = (elem.text[0:2])
-        print(f'{p} Dec')
-        if p == '16':
-            print('Bookmyshow: Spidey day slot opened!!!')
+        date = browser.find_element_by_id('showDates')
+        venue = browser.find_element_by_css_selector('a.venue-heading')
+        shows = browser.find_elements_by_css_selector('a.nameSpan')
+        p = (date.text[0:2])
+        if p == DATE:
+            print(f'Bookmyshow: {venue.text} 16th Dec slot opened!!!')
+            for show in shows:
+                print(f'Ticket booking started for {show.text}')
+            print('')
         else:
-            print('Bookmyshow: not yet open')
-        return p
+            print(f'Bookmyshow: {venue.text} not yet open')
+            print('')
+        return shows
     except:
         print('Was not able to find an element with that name.')
+        print('')
+
 
 def senseticket_tnew(arg):
     browser.get(arg)
@@ -44,18 +53,28 @@ def senseticket_tnew(arg):
     except:
         print('Was not able to find an element with that name.')
 
+
 def listToString(s):
     str1 = "" 
     for ele in s: 
         str1 += ele  
     return str1
+
     
+def loopy(argu):
+    if bms_links == argu:
+        for i in argu:
+            senseticket_bms(i)
+            time.sleep(5)
+    else:
+        for i in argu:
+            senseticket_tnew(i)
+            time.sleep(5)
+
 
 links.sort()
 
-
 liststr = listToString(links) 
-
 
 mo = re.compile(r"bookmyshow")
 regexelem = mo.findall(liststr)
@@ -64,13 +83,7 @@ lenvalue = len(regexelem)
 bms_links = links[:lenvalue]
 tnew_links = links[lenvalue:]
 
-
-for i in bms_links:
-    senseticket_bms(i)
-    time.sleep(5)
-
-for i in tnew_links:
-    senseticket_tnew(i)
-    time.sleep(5)
+loopy(bms_links)
+#loopy(tnew_links)
 
 browser.quit()
