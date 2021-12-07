@@ -7,6 +7,9 @@ from selenium.webdriver.support import expected_conditions as EC
 import re
 import os
 import telebot
+from dotenv import load_dotenv
+
+
 
 
 #Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to remove date from the end
@@ -34,6 +37,7 @@ YEAR = '2021'
 filmname = 'spider' #first word of film name
 
 #Telegram bot code
+load_dotenv()
 API_KEY = os.getenv('API_KEY')
 USER_ID = os.getenv('USER_ID')
 bot = telebot.TeleBot(API_KEY)
