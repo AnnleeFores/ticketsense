@@ -9,7 +9,6 @@ import os
 import telebot
 from dotenv import load_dotenv
 
-
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
@@ -32,7 +31,7 @@ links = [
 
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("-headless")
+#chrome_options.add_argument("-headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
 
@@ -40,7 +39,7 @@ try:
   ser = Service('./chromedriver')
   browser = webdriver.Chrome(service=ser,options=chrome_options)  #opens web browser -> firefox
 except:
-  browser = webdriver.Chrome(options=chrome_options)  #opens web browser -> firefox
+  browser = webdriver.Chrome(options=chrome_options)
 
 
 # Date of booking
@@ -176,3 +175,5 @@ tnew_links = links[lenvalue:]
 
 loopy(bms_links)
 loopy(tnew_links)
+
+browser.quit()
