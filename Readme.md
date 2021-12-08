@@ -10,7 +10,7 @@ Extract the file with:
 `unzip chromedriver_linux64.zip`
 
 Make it executable:
-`chmod +x geckodriver`
+`chmod +x chromedriver`
 
 Add the driver to your PATH so other tools can find it:
 `export PATH=$PATH:/path-to-extracted-file/.`
@@ -18,4 +18,4 @@ Add the driver to your PATH so other tools can find it:
 OR
 
 Move file to PATH
-`sudo mv geckodriver /usr/local/bin/`
+`sudo mv chromedriver /usr/local/bin/`
