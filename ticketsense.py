@@ -9,10 +9,9 @@ import re
 import os
 import telebot
 from dotenv import load_dotenv
-from time import sleep
 
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefoxc.service import Service
 
 
 #Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to remove date from the end
@@ -155,13 +154,7 @@ lenvalue = len(regexelem)
 bms_links = links[:lenvalue]
 tnew_links = links[lenvalue:]
 
-while True:
-    loopy(bms_links)
-    loopy(tnew_links)
-    sleep(60)
-
-""" loopy(bms_links)
-loopy(tnew_links) """
+loopy(bms_links)
+loopy(tnew_links)
 
 
-#browser.quit()
