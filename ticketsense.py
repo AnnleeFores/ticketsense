@@ -9,8 +9,12 @@ import os
 import telebot
 from dotenv import load_dotenv
 
+
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+
+
+
 
 #Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to remove date from the end
 
@@ -25,6 +29,7 @@ links = [
     'https://www.ticketnew.com/Apsara-Theatre-4K--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10515',
     'https://www.ticketnew.com/Crown-Theatre-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/213'
 ]
+
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("-headless")
@@ -32,6 +37,9 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 ser = Service('./chromedriver')
 browser = webdriver.Chrome(service=ser
     , options=chrome_options)  #opens web browser -> firefox
+
+
+
 
 # Date of booking
 
@@ -44,10 +52,10 @@ filmname = 'spider'  #first word of film name
 #Telegram bot code
 load_dotenv()
 
-API_KEY = os.environ['API_KEY']
-USER_ID = os.environ['USER_ID']
-#API_KEY = os.getenv('API_KEY')
-#USER_ID = os.getenv('USER_ID')
+#API_KEY = os.environ['API_KEY']
+#USER_ID = os.environ['USER_ID']
+API_KEY = os.getenv('API_KEY')
+USER_ID = os.getenv('USER_ID')
 bot = telebot.TeleBot(API_KEY)
 
 
