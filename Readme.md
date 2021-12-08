@@ -1,4 +1,7 @@
-Go to the chromedriver releases page. Find the suitable version of the driver for your platform and download it. For example:
+Go to the chromedriver releases page. Find the suitable version of the driver for your platform and download it.
+Make sure the chrome browser version matches the driver version
+For example this is the link for Chromedriver matching chrome version 96.0.4664.45 https://chromedriver.storage.googleapis.com/index.html?path=96.0.4664.45/
+ 
 wget https://chromedriver.storage.googleapis.com/96.0.4664.45/chromedriver_linux64.zip
 
 Extract the file with:
