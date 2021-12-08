@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 
 from selenium.webdriver.chrome.options import Options
-#from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service
 
 
 
@@ -34,8 +34,8 @@ chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("-headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
-#ser = Service('./chromedriver')
-browser = webdriver.Chrome(options=chrome_options)  #opens web browser -> firefox
+ser = Service('./chromedriver')
+browser = webdriver.Chrome(service=ser,options=chrome_options)  #opens web browser -> firefox
 
 
 
