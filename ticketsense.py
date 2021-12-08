@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 from time import sleep
 
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.firefox.service import Service
 
 
 #Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to remove date from the end
