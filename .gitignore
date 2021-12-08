@@ -130,3 +130,6 @@ dmypy.json
 .pyre/
 
 session.session
+/geckodriver
+/geckodriver.log
+.replit

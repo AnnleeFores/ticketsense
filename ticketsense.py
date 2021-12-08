@@ -1,3 +1,4 @@
+
 #ticketsense.py
 
 from selenium import webdriver
@@ -10,7 +11,8 @@ import telebot
 from dotenv import load_dotenv
 from time import sleep
 
-
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.service import Service
 
 
 #Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to remove date from the end
@@ -25,9 +27,10 @@ links = ['https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cine
 'https://www.ticketnew.com/Apsara-Theatre-4K--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10515',
 'https://www.ticketnew.com/Crown-Theatre-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/213'
 ]
-
-
-browser = webdriver.Firefox() #opens web browser -> firefox
+firefoxOptions = Options()
+firefoxOptions.add_argument("-headless")
+s = Service("./geckodriver")
+browser = webdriver.Firefox(service=s, options=firefoxOptions) #opens web browser -> firefox
 
 # Date of booking
 
@@ -39,8 +42,11 @@ filmname = 'spider' #first word of film name
 
 #Telegram bot code
 load_dotenv()
-API_KEY = os.getenv('API_KEY')
-USER_ID = os.getenv('USER_ID')
+
+API_KEY = os.environ['API_KEY']
+USER_ID = os.environ['USER_ID']
+#API_KEY = os.getenv('API_KEY')
+#USER_ID = os.getenv('USER_ID')
 bot = telebot.TeleBot(API_KEY)
 
 def message(msg):
