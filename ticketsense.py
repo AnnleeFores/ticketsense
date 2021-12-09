@@ -53,11 +53,9 @@ filmname = 'spider'  #first word of film name
 #Telegram bot code
 load_dotenv()
 
-#API_KEY = os.environ['API_KEY']
-#USER_ID = os.environ['USER_ID']
-API_KEY = os.getenv('API_KEY')
+API_KEY_TEST = os.getenv('API_KEY_TEST')
 USER_ID = os.getenv('USER_ID')
-bot = telebot.TeleBot(API_KEY)
+bot = telebot.TeleBot(API_KEY_TEST)
 
 
 def message(msg):
@@ -116,8 +114,6 @@ def senseticket_tnew(arg):
                 By.CSS_SELECTOR,
                 'li.ui-tabs-tab.ui-corner-top.ui-state-default.ui-tab.ui-tabs-active.ui-state-active'
             )))
-
-        # q = (date.text[4:])
 
         qo = re.compile(r"\d\d")
         qp = qo.search(date.text)
