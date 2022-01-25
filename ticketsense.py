@@ -9,25 +9,14 @@ import os
 import telebot
 from dotenv import load_dotenv
 
-
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-
-
-
 
 #Enter BookMyShow and TicketNew theater links here inside single quotes seperated by comma - Make sure to remove date from the end
 
 links = [
-    'https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT',
-    'https://in.bookmyshow.com/buytickets/aura-cinema-mattannur/cinema-matt-ACMR-MT',
-    'https://www.ticketnew.com/Carnival-Downtown--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/12539',
-    'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203',
-    'https://www.ticketnew.com/Mallika-Plex-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10264',
-    'https://in.bookmyshow.com/buytickets/carnival-arti-suncity-mall-barasat/cinema-kolk-ACBK-MT',
-    'https://in.bookmyshow.com/buytickets/pvr-lulu-kochi/cinema-koch-PVKC-MT',
-    'https://www.ticketnew.com/Apsara-Theatre-4K--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/10515',
-    'https://www.ticketnew.com/Crown-Theatre-Dolby-Atmos--Calicut-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/213'
+    'https://in.bookmyshow.com/buytickets/carnival-downtown-thalassery/cinema-thay-CDTH-MT', 
+    'https://www.ticketnew.com/Liberty-Paradise-Complex--Thalassery-Book-My-Movie-Show-Tickets/Online-Ticket-Booking/1203'
 ]
 
 chrome_options = Options()
@@ -35,21 +24,21 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("-headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
-
 try:
-  ser = Service('./chromedriver')
-  browser = webdriver.Chrome(service=ser,options=chrome_options)  #opens web browser -> firefox
+    ser = Service('./chromedriver')
+    browser = webdriver.Chrome(
+        service=ser, options=chrome_options)  #opens web browser -> firefox
 except:
-  browser = webdriver.Chrome(options=chrome_options)  #opens web browser -> firefox
-
+    browser = webdriver.Chrome(
+        options=chrome_options)  #opens web browser -> firefox
 
 # Date of booking
 
-DATE = '16'
-MON = '12'
-YEAR = '2021'
+DATE = '26'
+MON = '01'
+YEAR = '2022'
 
-filmname = 'spider'  #first word of film name
+filmname = 'hridayam'  #first word of film name
 
 #Telegram bot code
 load_dotenv()
@@ -57,6 +46,7 @@ load_dotenv()
 API_KEY = os.getenv('API_KEY')
 USER_ID = os.getenv('USER_ID')
 bot = telebot.TeleBot(API_KEY)
+
 
 def message(msg):
     bot.send_message(USER_ID, msg)
@@ -86,8 +76,8 @@ def senseticket_bms(arg):
             for count, show in enumerate(showsB, start=1):
                 print(count, f'- Ticket booking started for {show.text}')
                 if filmname in show.text.lower():
-                    print(f'Found Spidey - {arg}/{YEAR}{MON}{DATE}')
-                    message(f'Found Spidey - {arg}/{YEAR}{MON}{DATE}')
+                    print(f'Found ticket for {filmname} - {arg}/{YEAR}{MON}{DATE}')
+                    message(f'Found ticket for {filmname} - {arg}/{YEAR}{MON}{DATE}')
 
             print('-'.center(80, '-'))
         else:
@@ -115,8 +105,6 @@ def senseticket_tnew(arg):
                 'li.ui-tabs-tab.ui-corner-top.ui-state-default.ui-tab.ui-tabs-active.ui-state-active'
             )))
 
-        # q = (date.text[4:])
-
         qo = re.compile(r"\d\d")
         qp = qo.search(date.text)
         q = qp.group()
@@ -126,15 +114,15 @@ def senseticket_tnew(arg):
             for count, show in enumerate(showsT[1:], start=1):
                 print(count, f'- Ticket booking started for {show.text}')
                 if filmname in show.text.lower():
-                    print(f'Found Spidey - {arg}/{YEAR}{MON}{DATE}')
-                    message(f'Found Spidey - {arg}/{YEAR}{MON}{DATE}')
+                    print(f'Found ticket for {filmname} - {arg}/{YEAR}{MON}{DATE}')
+                    message(f'Found ticket for {filmname} - {arg}/{YEAR}{MON}{DATE}')
             print('-'.center(80, '-'))
         else:
             print(f'Ticket New: {venue.text} not yet open')
             print('-'.center(80, '-'))
 
     except:
-        print(f'Ticket New: Was not able to find an element with that name.')
+        print(f'Ticket New: {venue.text} Was not able to find an element with that name.')
         print('-'.center(80, '-'))
 
 
@@ -173,3 +161,6 @@ tnew_links = links[lenvalue:]
 
 loopy(bms_links)
 loopy(tnew_links)
+
+browser.close()
+browser.quit()
