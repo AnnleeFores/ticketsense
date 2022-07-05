@@ -1,6 +1,6 @@
 ### Ticket Sense
 
-##### Detects if Spiderman No Way Home ticket sales have started through BookMyShow & Ticket New near my place
+##### Detects if ticket sales have started through BookMyShow & Ticket New near my place
 
 
 Go to the chromedriver releases page. Find the suitable version of the driver for your platform and download it.
